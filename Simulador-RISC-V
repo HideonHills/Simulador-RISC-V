@@ -1,0 +1,1172 @@
+
+#[derive(Debug, Clone, Copy)]
+struct RegistradoresRISC {
+    // Registradores principais do RISC-V
+    x0: u32,   // zero - sempre zero
+    x1: u32,   // ra - return address
+    x2: u32,   // sp - stack pointer
+    x3: u32,   // gp - global pointer
+    x4: u32,   // tp - thread pointer
+    x5: u32,   // t0 - temporário 0
+    x6: u32,   // t1 - temporário 1
+    x7: u32,   // t2 - temporário 2
+    x8: u32,   // s0/fp - saved/frame pointer
+    x9: u32,   // s1 - saved 1
+    x10: u32,  // a0 - argumento/retorno 0
+    x11: u32,  // a1 - argumento/retorno 1
+    x12: u32,  // a2 - argumento 2
+    x13: u32,  // a3 - argumento 3
+    x14: u32,  // a4 - argumento 4
+    x15: u32,  // a5 - argumento 5
+    x16: u32,  // a6 - argumento 6
+    x17: u32,  // a7 - argumento 7
+    x18: u32,  // s2 - saved 2
+    x19: u32,  // s3 - saved 3
+    x20: u32,  // s4 - saved 4
+    x21: u32,  // s5 - saved 5
+    x22: u32,  // s6 - saved 6
+    x23: u32,  // s7 - saved 7
+    x24: u32,  // s8 - saved 8
+    x25: u32,  // s9 - saved 9
+    x26: u32,  // s10 - saved 10
+    x27: u32,  // s11 - saved 11
+    x28: u32,  // t3 - temporário 3
+    x29: u32,  // t4 - temporário 4
+    x30: u32,  // t5 - temporário 5
+    x31: u32,  // t6 - temporário 6
+    pc: u32,   // Program Counter
+    ir: u32,   // Instruction Register 
+    mar: u32,  // Memory Address Register 
+    mdr: u32,  // Memory Data Register 
+    ciclos: u64, // Contador de ciclos 
+}
+
+impl RegistradoresRISC {
+    fn new() -> Self {
+        //Atribuindo valor zero como inicial para os registradores
+        RegistradoresRISC {
+            x0: 0,
+            x1: 0,
+            x2: 0,
+            x3: 0,
+            x4: 0,
+            x5: 0,
+            x6: 0,
+            x7: 0,
+            x8: 0,
+            x9: 0,
+            x10: 0,
+            x11: 0,
+            x12: 0,
+            x13: 0,
+            x14: 0,
+            x15: 0,
+            x16: 0,
+            x17: 0,
+            x18: 0,
+            x19: 0,
+            x20: 0,
+            x21: 0,
+            x22: 0,
+            x23: 0,
+            x24: 0,
+            x25: 0,
+            x26: 0,
+            x27: 0,
+            x28: 0,
+            x29: 0,
+            x30: 0,
+            x31: 0,
+            pc: 0,
+            ir: 0,
+            mar: 0,
+            mdr: 0,
+            ciclos: 0,
+        }
+    }
+
+    fn ler(&self, numero_reg: usize) -> u32 {
+        //Atribui valores entre 0 - 31 aos registradores para facilitar a chamada em funções
+        match numero_reg {
+            0 => self.x0,
+            1 => self.x1,
+            2 => self.x2,
+            3 => self.x3,
+            4 => self.x4,
+            5 => self.x5,
+            6 => self.x6,
+            7 => self.x7,
+            8 => self.x8,
+            9 => self.x9,
+            10 => self.x10,
+            11 => self.x11,
+            12 => self.x12,
+            13 => self.x13,
+            14 => self.x14,
+            15 => self.x15,
+            16 => self.x16,
+            17 => self.x17,
+            18 => self.x18,
+            19 => self.x19,
+            20 => self.x20,
+            21 => self.x21,
+            22 => self.x22,
+            23 => self.x23,
+            24 => self.x24,
+            25 => self.x25,
+            26 => self.x26,
+            27 => self.x27,
+            28 => self.x28,
+            29 => self.x29,
+            30 => self.x30,
+            31 => self.x31,
+            _ => 0,
+        }
+    }
+
+    fn escrever(&mut self, numero_reg: usize, valor: u32) {
+        //Escreve valores dos registradores de acordo com as funções executadas
+        //O registrador x0 não recebe nenhum valor pois ele sempre será 0
+        if numero_reg != 0 {
+            match numero_reg {
+                1 => self.x1 = valor,
+                2 => self.x2 = valor,
+                3 => self.x3 = valor,
+                4 => self.x4 = valor,
+                5 => self.x5 = valor,
+                6 => self.x6 = valor,
+                7 => self.x7 = valor,
+                8 => self.x8 = valor,
+                9 => self.x9 = valor,
+                10 => self.x10 = valor,
+                11 => self.x11 = valor,
+                12 => self.x12 = valor,
+                13 => self.x13 = valor,
+                14 => self.x14 = valor,
+                15 => self.x15 = valor,
+                16 => self.x16 = valor,
+                17 => self.x17 = valor,
+                18 => self.x18 = valor,
+                19 => self.x19 = valor,
+                20 => self.x20 = valor,
+                21 => self.x21 = valor,
+                22 => self.x22 = valor,
+                23 => self.x23 = valor,
+                24 => self.x24 = valor,
+                25 => self.x25 = valor,
+                26 => self.x26 = valor,
+                27 => self.x27 = valor,
+                28 => self.x28 = valor,
+                29 => self.x29 = valor,
+                30 => self.x30 = valor,
+                31 => self.x31 = valor,
+                _ => {},
+            }
+        }
+    }
+
+}
+
+
+// ========== INTRUÇÕES DA ISA RISC-V RV32I ==========
+
+// ========== INTRUÇÕES DE DESLOCAMENTO (SHIFT) ==========
+
+//Shift Left Logical: desloca o valor do registrador para a esquerda
+fn instrucao_sll(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, rs2: usize) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    let shamt = valor2 & 0x1F; // Apenas 5 bits menos significativos
+    let resultado = valor1 << shamt;
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SLL: x{} = x{} ({:b}) << {} = {:b}", 
+             rd, rs1, valor1, shamt, resultado);
+}
+
+//Shift Left Logical Immediate: desloca o valor do registrador para a esquerda de acordo com o valor imediato
+fn instrucao_slli(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, shamt: u32) {
+    let valor1 = regs.ler(rs1);
+    let resultado = valor1 << (shamt & 0x1F);
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SLLI: x{} = x{} ({:b}) << {} = {:b}", 
+             rd, rs1, valor1, shamt & 0x1F, resultado);
+}
+
+//Shift Right Logical: desloca o valor do registrador para a direita
+fn instrucao_srl(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, rs2: usize) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    let shamt = valor2 & 0x1F;
+    let resultado = valor1 >> shamt;
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SRL: x{} = x{} ({:b}) >> {} = {:b}", 
+             rd, rs1, valor1, shamt, resultado);
+}
+
+//Shift Right Logical Immediate: desloca o valor do registrador para a direita de acordo com o valor imediato
+fn instrucao_srli(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, shamt: u32) {
+    let valor1 = regs.ler(rs1);
+    let resultado = valor1 >> (shamt & 0x1F);
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SRLI: x{} = x{} ({:b}) >> {} = {:b}", 
+             rd, rs1, valor1, shamt & 0x1F, resultado);
+}
+
+//Shift Right Arithmetic: desloca o valor do registrador para a direita preservando seu sinal
+fn instrucao_sra(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, rs2: usize) {
+    let valor1 = regs.ler(rs1) as i32;
+    let valor2 = regs.ler(rs2);
+    let shamt = (valor2 & 0x1F) as i32;
+    let resultado = (valor1 >> shamt) as u32;
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SRA: x{} = x{} ({}) >> {} = {}", 
+             rd, rs1, valor1, shamt, resultado);
+}
+
+//Shift Right Arithmetic Immediate: desloca o valor do registrador para a direita preservando seu sinal de acordo com o valor imediato
+fn instrucao_srai(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, shamt: u32) {
+    let valor1 = regs.ler(rs1) as i32;
+    let resultado = (valor1 >> (shamt & 0x1F) as i32) as u32;
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SRAI: x{} = x{} ({}) >> {} = {}", 
+             rd, rs1, valor1, shamt & 0x1F, resultado);
+}
+
+// ========== INTRUÇÕES ARITMÉTICAS ==========
+
+//ADD: Soma o valor de dois registradores
+fn instrucao_add(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, rs2: usize) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    let resultado = valor1.wrapping_add(valor2);
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("ADD: x{} = x{} ({}) + x{} ({}) = {}", 
+             rd, rs1, valor1, rs2, valor2, resultado);
+}
+
+//ADD Immediate: Soma o valor de um registrador com o valor imediato
+fn instrucao_addi(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, imediato: i32) {
+    let valor1 = regs.ler(rs1);
+    let resultado = valor1.wrapping_add(imediato as u32);
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("ADDI: x{} = x{} ({}) + {} = {}", 
+             rd, rs1, valor1, imediato, resultado);
+}
+
+//SUB: Subtrai o valor de dois registradores
+fn instrucao_sub(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, rs2: usize) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    let resultado = valor1.wrapping_sub(valor2);
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SUB: x{} = x{} ({}) - x{} ({}) = {}", 
+             rd, rs1, valor1, rs2, valor2, resultado);
+}
+
+//Load Upper Immediate: carrega imediato de 20 bits nos bits 31-12
+fn instrucao_lui(regs: &mut RegistradoresRISC, rd: usize, imediato: i32) {
+    let resultado = (imediato as u32) << 12;
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("LUI: x{} = {} << 12 = 0x{:08X}", 
+             rd, imediato, resultado);
+}
+
+//Add Upper Immediate to PC: endereça valor em posição independente
+fn instrucao_auipc(regs: &mut RegistradoresRISC, rd: usize, imediato: i32) {
+    let pc_atual = regs.pc;
+    let resultado = pc_atual.wrapping_add((imediato as u32) << 12);
+    regs.escrever(rd, resultado);
+    regs.pc = pc_atual.wrapping_add(4);
+    println!("AUIPC: x{} = PC (0x{:08X}) + ({} << 12) = 0x{:08X}", 
+             rd, pc_atual, imediato, resultado);
+}
+
+// ========== INTRUÇÕES LÓGICAS ==========
+
+//AND: realiza operação AND bit a bit entre dois registradores
+fn instrucao_and(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, rs2: usize) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    let resultado = valor1 & valor2;
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("AND: x{} = x{} ({:b}) & x{} ({:b}) = {:b}", 
+             rd, rs1, valor1, rs2, valor2, resultado);
+}
+
+//AND Immediate: realiza operação AND com valor imediato
+fn instrucao_andi(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, imediato: i32) {
+    let valor1 = regs.ler(rs1);
+    let resultado = valor1 & (imediato as u32);
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("ANDI: x{} = x{} ({:b}) & 0x{:08X} = {:b}", 
+             rd, rs1, valor1, imediato as u32, resultado);
+}
+
+//OR: realiza operação OR bit a bit entre dois registradores
+fn instrucao_or(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, rs2: usize) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    let resultado = valor1 | valor2;
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("OR:  x{} = x{} ({:b}) | x{} ({:b}) = {:b}", 
+             rd, rs1, valor1, rs2, valor2, resultado);
+}
+
+//OR Immediate: realiza operação OR com valor imediato
+fn instrucao_ori(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, imediato: i32) {
+    let valor1 = regs.ler(rs1);
+    let resultado = valor1 | (imediato as u32);
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("ORI: x{} = x{} ({:b}) | 0x{:08X} = {:b}", 
+             rd, rs1, valor1, imediato as u32, resultado);
+}
+
+//XOR: realiza operação XOR bit a bit entre dois registradores
+fn instrucao_xor(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, rs2: usize) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    let resultado = valor1 ^ valor2;
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("XOR: x{} = x{} ({:b}) ^ x{} ({:b}) = {:b}", 
+             rd, rs1, valor1, rs2, valor2, resultado);
+}
+
+//XOR Immediate: realiza operação XOR com valor imediato
+fn instrucao_xori(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, imediato: i32) {
+    let valor1 = regs.ler(rs1);
+    let resultado = valor1 ^ (imediato as u32);
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("XORI: x{} = x{} ({:b}) ^ 0x{:08X} = {:b}", 
+             rd, rs1, valor1, imediato as u32, resultado);
+}
+
+// ========== INTRUÇÕES DE COMPARAÇÃO ==========
+
+//Set Less Than: compara o menor entre dois registradores
+fn instrucao_slt(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, rs2: usize) {
+    let valor1 = regs.ler(rs1) as i32;
+    let valor2 = regs.ler(rs2) as i32;
+    let resultado = if valor1 < valor2 { 1 } else { 0 };
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SLT: x{} = (x{} ({}) < x{} ({})) ? 1 : 0 = {}", 
+             rd, rs1, valor1, rs2, valor2, resultado);
+}
+
+//Set Less Than Immediate: compara o registrador com o imediato para ver se ele é menor
+fn instrucao_slti(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, imediato: i32) {
+    let valor1 = regs.ler(rs1) as i32;
+    let resultado = if valor1 < imediato { 1 } else { 0 };
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SLTI: x{} = (x{} ({}) < {}) ? 1 : 0 = {}", 
+             rd, rs1, valor1, imediato, resultado);
+}
+
+//Set Less Than Unsigned: compara o menor entre dois registradores podendo receber números negativos
+fn instrucao_sltu(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, rs2: usize) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    let resultado = if valor1 < valor2 { 1 } else { 0 };
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SLTU: x{} = (x{} ({}) < x{} ({})) ? 1 : 0 = {}", 
+             rd, rs1, valor1, rs2, valor2, resultado);
+}
+
+//Set Less Than Immediate Unsigned: compara o registrador com o imediato para ver se ele é menor, podendo receber números negativos
+fn instrucao_sltiu(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, imediato: i32) {
+    let valor1 = regs.ler(rs1);
+    let imed_unsigned = (imediato as u32).wrapping_add(0);
+    let resultado = if valor1 < imed_unsigned { 1 } else { 0 };
+    regs.escrever(rd, resultado);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SLTIU: x{} = (x{} ({}) < {}) ? 1 : 0 = {}", 
+             rd, rs1, valor1, imediato, resultado);
+}
+
+// ========== INTRUÇÕES DE DESVIO (BRANCH) ==========
+
+//Branch if Equal: realiza um desvio caso os registradores tenham o mesmo valor
+fn instrucao_beq(regs: &mut RegistradoresRISC, rs1: usize, rs2: usize, offset: i32) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    if valor1 == valor2 {
+        regs.pc = regs.pc.wrapping_add(offset as u32);
+        println!("BEQ: x{} ({}) == x{} ({}) -> PC = PC + {} = 0x{:08X}", 
+                 rs1, valor1, rs2, valor2, offset, regs.pc);
+    } else {
+        regs.pc = regs.pc.wrapping_add(4);
+        println!("BEQ: x{} ({}) != x{} ({}) -> PC = PC + 4", 
+                 rs1, valor1, rs2, valor2);
+    }
+}
+
+//Branch if Not Equal: realiza um desvio caso os registradores tenham valores diferentes
+fn instrucao_bne(regs: &mut RegistradoresRISC, rs1: usize, rs2: usize, offset: i32) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    if valor1 != valor2 {
+        regs.pc = regs.pc.wrapping_add(offset as u32);
+        println!("BNE: x{} ({}) != x{} ({}) -> PC = PC + {} = 0x{:08X}", 
+                 rs1, valor1, rs2, valor2, offset, regs.pc);
+    } else {
+        regs.pc = regs.pc.wrapping_add(4);
+        println!("BNE: x{} ({}) == x{} ({}) -> PC = PC + 4", 
+                 rs1, valor1, rs2, valor2);
+    }
+}
+
+//Branch if Less Than: realiza um desvio caso o registrador seja menor que seu comparativo
+fn instrucao_blt(regs: &mut RegistradoresRISC, rs1: usize, rs2: usize, offset: i32) {
+    let valor1 = regs.ler(rs1) as i32;
+    let valor2 = regs.ler(rs2) as i32;
+    if valor1 < valor2 {
+        regs.pc = regs.pc.wrapping_add(offset as u32);
+        println!("BLT: x{} ({}) < x{} ({}) -> PC = PC + {} = 0x{:08X}", 
+                 rs1, valor1, rs2, valor2, offset, regs.pc);
+    } else {
+        regs.pc = regs.pc.wrapping_add(4);
+        println!("BLT: x{} ({}) >= x{} ({}) -> PC = PC + 4", 
+                 rs1, valor1, rs2, valor2);
+    }
+}
+
+//Branch if Greater or Equal: realiza um desvio caso o registrador seja maior ou igual a seu comparativo
+fn instrucao_bge(regs: &mut RegistradoresRISC, rs1: usize, rs2: usize, offset: i32) {
+    let valor1 = regs.ler(rs1) as i32;
+    let valor2 = regs.ler(rs2) as i32;
+    if valor1 >= valor2 {
+        regs.pc = regs.pc.wrapping_add(offset as u32);
+        println!("BGE: x{} ({}) >= x{} ({}) -> PC = PC + {} = 0x{:08X}", 
+                 rs1, valor1, rs2, valor2, offset, regs.pc);
+    } else {
+        regs.pc = regs.pc.wrapping_add(4);
+        println!("BGE: x{} ({}) < x{} ({}) -> PC = PC + 4", 
+                 rs1, valor1, rs2, valor2);
+    }
+}
+
+//Branch if Less Than Unsigned: realiza um desvio caso o registrador seja menor que seu comparativo, considerando negativos
+fn instrucao_bltu(regs: &mut RegistradoresRISC, rs1: usize, rs2: usize, offset: i32) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    if valor1 < valor2 {
+        regs.pc = regs.pc.wrapping_add(offset as u32);
+        println!("BLTU: x{} ({}) < x{} ({}) -> PC = PC + {} = 0x{:08X}", 
+                 rs1, valor1, rs2, valor2, offset, regs.pc);
+    } else {
+        regs.pc = regs.pc.wrapping_add(4);
+        println!("BLTU: x{} ({}) >= x{} ({}) -> PC = PC + 4", 
+                 rs1, valor1, rs2, valor2);
+    }
+}
+
+//Branch if Greater or Equal Unsigned: realiza um desvio caso o registrador seja maior ou igual a seu comparativo, considerando negativos
+fn instrucao_bgeu(regs: &mut RegistradoresRISC, rs1: usize, rs2: usize, offset: i32) {
+    let valor1 = regs.ler(rs1);
+    let valor2 = regs.ler(rs2);
+    if valor1 >= valor2 {
+        regs.pc = regs.pc.wrapping_add(offset as u32);
+        println!("BGEU: x{} ({}) >= x{} ({}) -> PC = PC + {} = 0x{:08X}", 
+                 rs1, valor1, rs2, valor2, offset, regs.pc);
+    } else {
+        regs.pc = regs.pc.wrapping_add(4);
+        println!("BGEU: x{} ({}) < x{} ({}) -> PC = PC + 4", 
+                 rs1, valor1, rs2, valor2);
+    }
+}
+
+// ========== INTRUÇÕES DE SALTO (JUMP) ==========
+
+//Jump and Link: salta e guarda endereço de retorno
+fn instrucao_jal(regs: &mut RegistradoresRISC, rd: usize, offset: i32) {
+    let pc_atual = regs.pc;
+    regs.escrever(rd, pc_atual.wrapping_add(4));
+    regs.pc = pc_atual.wrapping_add(offset as u32);
+    println!("JAL: x{} = PC+4 (0x{:08X}), PC = PC + {} = 0x{:08X}", 
+             rd, pc_atual.wrapping_add(4), offset, regs.pc);
+}
+
+//Jump and Link Register: salta para endereço em registrador
+fn instrucao_jalr(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, offset: i32) {
+    let pc_atual = regs.pc;
+    let base = regs.ler(rs1);
+    regs.escrever(rd, pc_atual.wrapping_add(4));
+    regs.pc = (base.wrapping_add(offset as u32)) & !1; // Clear LSB
+    println!("JALR: x{} = PC+4 (0x{:08X}), PC = (x{} ({}) + {}) & ~1 = 0x{:08X}", 
+             rd, pc_atual.wrapping_add(4), rs1, base, offset, regs.pc);
+}
+
+// ========== INTRUÇÕES DE CARGA (LOAD) ==========
+
+//Load Word: carrega palavra (32 bits)
+fn instrucao_lw(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, offset: i32, memoria: &MemoriaRAM) {
+    let endereco_base = regs.ler(rs1);
+    let endereco = endereco_base.wrapping_add(offset as u32);
+    let valor = memoria.ler(endereco);
+    regs.escrever(rd, valor);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("LW: x{} = Mem[0x{:08X}] = 0x{:08X} ({})", 
+             rd, endereco, valor, valor);
+}
+
+//Load Halfword: carrega meia palavra com extensão de sinal
+fn instrucao_lh(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, offset: i32, memoria: &MemoriaRAM) {
+    let endereco_base = regs.ler(rs1);
+    let endereco = endereco_base.wrapping_add(offset as u32);
+    let palavra = memoria.ler(endereco & !0x3); // Alinha para palavra
+    let byte_offset = (endereco & 0x3) as usize * 8;
+    let valor_sem_sinal = (palavra >> byte_offset) & 0xFFFF;
+    let valor = (valor_sem_sinal as i16) as i32 as u32; // Extensão de sinal
+    regs.escrever(rd, valor);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("LH: x{} = Mem[0x{:08X}] (com extensão de sinal) = 0x{:08X}", 
+             rd, endereco, valor);
+}
+
+//Load Byte: carrega byte com extensão de sinal
+fn instrucao_lb(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, offset: i32, memoria: &MemoriaRAM) {
+    let endereco_base = regs.ler(rs1);
+    let endereco = endereco_base.wrapping_add(offset as u32);
+    let palavra = memoria.ler(endereco & !0x3);
+    let byte_offset = (endereco & 0x3) as usize * 8;
+    let valor_sem_sinal = (palavra >> byte_offset) & 0xFF;
+    let valor = (valor_sem_sinal as i8) as i32 as u32; // Extensão de sinal
+    regs.escrever(rd, valor);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("LB: x{} = Mem[0x{:08X}] (com extensão de sinal) = 0x{:08X}", 
+             rd, endereco, valor);
+}
+
+//Load Halfword Unsigned: carrega meia palavra sem sinal
+fn instrucao_lhu(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, offset: i32, memoria: &MemoriaRAM) {
+    let endereco_base = regs.ler(rs1);
+    let endereco = endereco_base.wrapping_add(offset as u32);
+    let palavra = memoria.ler(endereco & !0x3);
+    let byte_offset = (endereco & 0x3) as usize * 8;
+    let valor = (palavra >> byte_offset) & 0xFFFF;
+    regs.escrever(rd, valor);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("LHU: x{} = Mem[0x{:08X}] (sem extensão de sinal) = 0x{:08X}", 
+             rd, endereco, valor);
+}
+
+//Load Byte Unsigned: carrega byte sem sinal
+fn instrucao_lbu(regs: &mut RegistradoresRISC, rd: usize, rs1: usize, offset: i32, memoria: &MemoriaRAM) {
+    let endereco_base = regs.ler(rs1);
+    let endereco = endereco_base.wrapping_add(offset as u32);
+    let palavra = memoria.ler(endereco & !0x3);
+    let byte_offset = (endereco & 0x3) as usize * 8;
+    let valor = (palavra >> byte_offset) & 0xFF;
+    regs.escrever(rd, valor);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("LBU: x{} = Mem[0x{:08X}] (sem extensão de sinal) = 0x{:08X}", 
+             rd, endereco, valor);
+}
+
+// ========== INTRUÇÕES DE ARMAZENAMENTO (STORE) ==========
+
+//Store Word: armazena palavra
+fn instrucao_sw(regs: &mut RegistradoresRISC, rs1: usize, rs2: usize, offset: i32, memoria: &mut MemoriaRAM) {
+    let endereco_base = regs.ler(rs1);
+    let endereco = endereco_base.wrapping_add(offset as u32);
+    let valor = regs.ler(rs2);
+    memoria.escrever(endereco, valor);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SW: Mem[0x{:08X}] = x{} (0x{:08X})", 
+             endereco, rs2, valor);
+}
+
+//Store Halfword: armazena meia palavra
+fn instrucao_sh(regs: &mut RegistradoresRISC, rs1: usize, rs2: usize, offset: i32, memoria: &mut MemoriaRAM) {
+    let endereco_base = regs.ler(rs1);
+    let endereco = endereco_base.wrapping_add(offset as u32);
+    let valor = regs.ler(rs2) & 0xFFFF;
+    
+    // Lê a palavra atual
+    let palavra_atual = memoria.ler(endereco & !0x3);
+    let byte_offset = (endereco & 0x3) as usize * 8;
+    
+    // Limpa os 16 bits da posição
+    let mascara_limpeza = !(0xFFFF << byte_offset);
+    let palavra_limpa = palavra_atual & mascara_limpeza;
+    
+    // Insere os novos 16 bits
+    let nova_palavra = palavra_limpa | (valor << byte_offset);
+    
+    memoria.escrever(endereco & !0x3, nova_palavra);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SH: Mem[0x{:08X}] = x{}[15:0] (0x{:04X})", 
+             endereco, rs2, valor);
+}
+
+//Store Byte: armazena byte
+fn instrucao_sb(regs: &mut RegistradoresRISC, rs1: usize, rs2: usize, offset: i32, memoria: &mut MemoriaRAM) {
+    let endereco_base = regs.ler(rs1);
+    let endereco = endereco_base.wrapping_add(offset as u32);
+    let valor = regs.ler(rs2) & 0xFF;
+    
+    // Lê a palavra atual
+    let palavra_atual = memoria.ler(endereco & !0x3);
+    let byte_offset = (endereco & 0x3) as usize * 8;
+    
+    // Limpa o byte da posição
+    let mascara_limpeza = !(0xFF << byte_offset);
+    let palavra_limpa = palavra_atual & mascara_limpeza;
+    
+    // Insere o novo byte
+    let nova_palavra = palavra_limpa | (valor << byte_offset);
+    
+    memoria.escrever(endereco & !0x3, nova_palavra);
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("SB: Mem[0x{:08X}] = x{}[7:0] (0x{:02X})", 
+             endereco, rs2, valor);
+}
+
+// ========== INTRUÇÕES DE SINCRONIZAÇÃO (SYNCHRONIZATION) ==========
+
+//Barreira de memória: ordena acessos à memória
+fn instrucao_fence(regs: &mut RegistradoresRISC) {
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("FENCE: barreira de memória (ignorada no simulador)");
+}
+
+//Barreira de instruções: sincroniza cache de instruções
+fn instrucao_fence_i(regs: &mut RegistradoresRISC) {
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("FENCE.I: barreira de instruções (ignorada no simulador)");
+}
+
+// ========== INTRUÇÕES DE AMBIENTE (ENVIRONMENT) ==========
+
+//Environment Call: chamada ao sistema/OS
+fn instrucao_ecall(regs: &mut RegistradoresRISC) {
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("ECALL: chamada de sistema (simulada)");
+}
+
+//Environment Break: ponto de depuração/interrupção
+fn instrucao_ebreak(regs: &mut RegistradoresRISC) {
+    regs.pc = regs.pc.wrapping_add(4);
+    println!("EBREAK: ponto de depuração (simulado)");
+}
+
+const EMPTY: u8 = 0xFF;
+
+//Função do barramento
+fn barramento() {
+    // Criar a memória PRIMEIRO
+    let mut memoria = MemoriaRAM::new();
+    
+    // Escrever uma mensagem na VRAM
+    let mensagem: &[u8; 8] = b"Bom dia!";
+    for (i, &caractere) in mensagem.iter().enumerate() {
+        memoria.escrever_vram_byte(0x80000 + i as u32 * 1, caractere);
+    }
+    
+    // VISUALIZAÇÃO DA VRAM
+    println!("\n=== VISUALIZAÇÃO DA VRAM ===");
+    memoria.visualizar_vram(0x80000, 80, 6);
+    
+    // Executa CPU passando a memória
+    cpu(&mut memoria);
+}
+
+fn cpu(memoria: &mut MemoriaRAM) {
+    // Criar estrutura de registradores RISC-V com registradores extras para ciclo de busca
+    let mut regs = RegistradoresRISC::new();
+    
+    // Configurar PC inicial
+    regs.pc = 0x0000;
+    
+    println!("\n=== ESTADO INICIAL ===");
+    println!("PC inicial: 0x{:08X}", regs.pc);
+    println!("Ciclos: {}", regs.ciclos);
+    
+    
+    // CARREGAR PROGRAMA DE TESTE NA MEMÓRIA
+    println!("\n=== CARREGANDO PROGRAMA NA MEMÓRIA ===");
+    
+    // Programa RISC-V que testa várias instruções
+    // Cada linha é uma instrução de 32 bits
+    let programa: Vec<u32> = vec![
+        // Inicializar registradores
+        0x00600293, // addi x5, x0, 6      (t0 = 6)
+        0x00500313, // addi x6, x0, 5      (t1 = 5)
+        0x00300393, // addi x7, x0, 3      (t2 = 3)
+        0x00100E13, // addi x28, x0, 1     (t3 = 1)
+        0x00A00E93, // addi x29, x0, 10    (t4 = 10)
+        
+        // Testar instruções de SHIFT
+        0x007292B3, // sll x5, x5, x7      (t0 = t0 << 3)
+        0x00231313, // slli x6, x6, 2      (t1 = t1 << 2)
+        0x007353B3, // srl x7, x6, x7      (t2 = t1 >> 3)
+        0x00135E33, // srli x28, x6, 1     (t3 = t1 >> 1)
+        0x01C2DEB3, // sra x29, x5, x28    (t4 = t0 >> t3 com sinal)
+        
+        // Testar instruções ARITMÉTICAS
+        0x00628433, // add x8, x5, x6      (s0 = t0 + t1)
+        0x00728513, // addi x10, x5, 7     (a0 = t0 + 7)
+        0x40630633, // sub x12, x6, x5     (a2 = t1 - t0)
+        0x12345AB7, // lui x21, 0x12345    (s5 = 0x12345 << 12)
+        
+        // Testar instruções LÓGICAS
+        0x0062F5B3, // and x11, x5, x6     (a1 = t0 & t1)
+        0x0FF2F613, // andi x12, x5, 0xFF  (a2 = t0 & 0xFF)
+        0x0062E6B3, // or x13, x5, x6      (a3 = t0 | t1)
+        0x00F2E713, // ori x14, x5, 0x0F   (a4 = t0 | 0x0F)
+        0x0062C7B3, // xor x15, x5, x6     (a5 = t0 ^ t1)
+        
+        // Testar instruções de COMPARAÇÃO
+        0x0062A833, // slt x16, x5, x6     (a6 = (t0 < t1) ? 1 : 0)
+        0x00A2A933, // slti x18, x5, 10    (s2 = (t0 < 10) ? 1 : 0)
+        0x0062B9B3, // sltu x19, x5, x6    (s3 = (t0 < t1) unsigned? 1 : 0)
+        
+        // Testar LOAD/STORE
+        0x0002A203, // lw x4, 0(x5)        (tp = Mem[t0 + 0])
+        0x00032283, // lh x5, 0(x6)        (t0 = Mem[t1 + 0] half-word)
+        0x00036303, // lbu x6, 0(x6)       (t1 = Mem[t1 + 0] byte unsigned)
+        0x0082A023, // sw x8, 0(x5)        (Mem[t0 + 0] = s0)
+        
+        // Testar BRANCH (se t0 != t1, pula para offset 0x10)
+        0xFE629CE3, // bne x5, x6, -8      (if t0 != t1, PC = PC - 8)
+        
+        // Testar JUMP
+        0x020000EF, // jal x1, 0x20        (ra = PC+4, PC = PC + 0x20)
+        
+        // Finalizar programa
+        0x00000073, // ecall               (chamada de sistema - parar)
+    ];
+    
+    // Escrever programa na memória a partir do endereço 0x0000
+    for (i, &instrucao) in programa.iter().enumerate() {
+        let endereco = 0x0000 + (i as u32 * 4);
+        memoria.escrever(endereco, instrucao);
+        println!("Mem[0x{:08X}] = 0x{:08X}", endereco, instrucao);
+    }
+    
+    // CICLO PRINCIPAL DE EXECUÇÃO
+    println!("\n=== INICIANDO CICLO DE BUSCA ===");
+    
+    let max_instrucoes = 30;
+    let mut instrucoes_executadas = 0;
+    
+    while instrucoes_executadas < max_instrucoes {
+        println!("\n═══════════════════════════════════════════════");
+        println!("CICLO {} - INSTRUÇÃO {}", regs.ciclos + 1, instrucoes_executadas + 1);
+        println!("═══════════════════════════════════════════════");
+        
+        // 1. CICLO DE BUSCA (FETCH)
+        println!("\n[FETCH] Buscando instrução...");
+        
+        // FASE 1: PC → MAR
+        regs.mar = regs.pc;
+        println!("  1. PC (0x{:08X}) → MAR", regs.pc);
+        
+        // FASE 2: Mem[MAR] → MDR
+        regs.mdr = memoria.ler(regs.mar);
+        println!("  2. Mem[0x{:08X}] (0x{:08X}) → MDR", regs.mar, regs.mdr);
+        
+        // FASE 3: MDR → IR
+        regs.ir = regs.mdr;
+        println!("  3. MDR (0x{:08X}) → IR", regs.mdr);
+        
+        // FASE 4: PC + 4 → PC (próxima instrução)
+        let pc_anterior = regs.pc;
+        regs.pc = regs.pc.wrapping_add(4);
+        println!("  4. PC + 4 (0x{:08X} → 0x{:08X})", pc_anterior, regs.pc);
+        
+        regs.ciclos += 1;
+        
+        // Verificar se é instrução de parada (ECALL)
+        if regs.ir == 0x00000073 {
+            println!("\n[STOP] Instrução ECALL encontrada - finalizando execução");
+            break;
+        }
+        
+        // 2. CICLO DE DECODIFICAÇÃO (DECODE)
+        println!("\n[DECODE] Decodificando instrução 0x{:08X}...", regs.ir);
+        
+        // Extrair campos da instrução
+        let opcode = (regs.ir & 0x7F) as u8;
+        let rd = ((regs.ir >> 7) & 0x1F) as usize;
+        let funct3 = ((regs.ir >> 12) & 0x7) as u8;
+        let rs1 = ((regs.ir >> 15) & 0x1F) as usize;
+        let rs2 = ((regs.ir >> 20) & 0x1F) as usize;
+        let funct7 = ((regs.ir >> 25) & 0x7F) as u8;
+        
+        // Determinar tipo da instrução
+        let tipo = match opcode {
+            0x33 => "R",
+            0x13 => "I",
+            0x03 => "I (LOAD)",
+            0x23 => "S (STORE)",
+            0x63 => "B (BRANCH)",
+            0x37 => "U (LUI)",
+            0x17 => "U (AUIPC)",
+            0x6F => "J (JAL)",
+            0x67 => "I (JALR)",
+            0x0F => "FENCE",
+            0x73 => "SYSTEM",
+            _ => "DESCONHECIDO",
+        };
+        
+        // Extrair imediato baseado no tipo
+        let imm = match tipo {
+            "I" | "I (LOAD)" | "I (JALR)" => (regs.ir as i32) >> 20,
+            "S (STORE)" => {
+                let imm_11_5 = ((regs.ir >> 25) & 0x7F) as i32;
+                let imm_4_0 = ((regs.ir >> 7) & 0x1F) as i32;
+                (imm_11_5 << 5) | imm_4_0
+            },
+            "B (BRANCH)" => {
+                let imm_12 = ((regs.ir >> 31) & 0x1) as i32;
+                let imm_10_5 = ((regs.ir >> 25) & 0x3F) as i32;
+                let imm_4_1 = ((regs.ir >> 8) & 0xF) as i32;
+                let imm_11 = ((regs.ir >> 7) & 0x1) as i32;
+                (imm_12 << 12) | (imm_11 << 11) | (imm_10_5 << 5) | (imm_4_1 << 1)
+            },
+            "U (LUI)" | "U (AUIPC)" => (regs.ir as i32) & !0xFFF,
+            "J (JAL)" => {
+                let imm_20 = ((regs.ir >> 31) & 0x1) as i32;
+                let imm_10_1 = ((regs.ir >> 21) & 0x3FF) as i32;
+                let imm_11 = ((regs.ir >> 20) & 0x1) as i32;
+                let imm_19_12 = ((regs.ir >> 12) & 0xFF) as i32;
+                (imm_20 << 20) | (imm_19_12 << 12) | (imm_11 << 11) | (imm_10_1 << 1)
+            },
+            _ => 0,
+        };
+        
+        println!("  Tipo: {}, Opcode: 0x{:02X}, funct3: {}, funct7: {}", 
+                 tipo, opcode, funct3, funct7);
+        println!("  rd: x{}, rs1: x{}, rs2: x{}, imm: {}", rd, rs1, rs2, imm);
+        
+        // 3. CICLO DE EXECUÇÃO (EXECUTE)
+        println!("\n[EXECUTE] Executando instrução...");
+        
+        // Executar instrução baseada no opcode
+        match opcode {
+            // Instruções R-type
+            0x33 => match (funct3, funct7) {
+                (0x0, 0x00) => instrucao_add(&mut regs, rd, rs1, rs2),
+                (0x0, 0x20) => instrucao_sub(&mut regs, rd, rs1, rs2),
+                (0x1, 0x00) => instrucao_sll(&mut regs, rd, rs1, rs2),
+                (0x2, 0x00) => instrucao_slt(&mut regs, rd, rs1, rs2),
+                (0x3, 0x00) => instrucao_sltu(&mut regs, rd, rs1, rs2),
+                (0x4, 0x00) => instrucao_xor(&mut regs, rd, rs1, rs2),
+                (0x5, 0x00) => instrucao_srl(&mut regs, rd, rs1, rs2),
+                (0x5, 0x20) => instrucao_sra(&mut regs, rd, rs1, rs2),
+                (0x6, 0x00) => instrucao_or(&mut regs, rd, rs1, rs2),
+                (0x7, 0x00) => instrucao_and(&mut regs, rd, rs1, rs2),
+                _ => println!("  Instrução R-type não implementada: funct3={}, funct7={}", funct3, funct7),
+            },
+            
+            // Instruções I-type (aritméticas)
+            0x13 => match funct3 {
+                0x0 => instrucao_addi(&mut regs, rd, rs1, imm),
+                0x1 => instrucao_slli(&mut regs, rd, rs1, imm as u32),
+                0x2 => instrucao_slti(&mut regs, rd, rs1, imm),
+                0x3 => instrucao_sltiu(&mut regs, rd, rs1, imm),
+                0x4 => instrucao_xori(&mut regs, rd, rs1, imm),
+                0x5 => match (imm >> 5) & 0x3F {
+                    0x00 => instrucao_srli(&mut regs, rd, rs1, (imm & 0x1F) as u32),
+                    0x20 => instrucao_srai(&mut regs, rd, rs1, (imm & 0x1F) as u32),
+                    _ => println!("  Instrução shift I-type inválida"),
+                },
+                0x6 => instrucao_ori(&mut regs, rd, rs1, imm),
+                0x7 => instrucao_andi(&mut regs, rd, rs1, imm),
+                _ => println!("  Instrução I-type não implementada: funct3={}", funct3),
+            },
+            
+            // Instruções LOAD
+            0x03 => match funct3 {
+                0x0 => instrucao_lb(&mut regs, rd, rs1, imm, memoria),
+                0x1 => instrucao_lh(&mut regs, rd, rs1, imm, memoria),
+                0x2 => instrucao_lw(&mut regs, rd, rs1, imm, memoria),
+                0x4 => instrucao_lbu(&mut regs, rd, rs1, imm, memoria),
+                0x5 => instrucao_lhu(&mut regs, rd, rs1, imm, memoria),
+                _ => println!("  Instrução LOAD não implementada: funct3={}", funct3),
+            },
+            
+            // Instruções STORE
+            0x23 => match funct3 {
+                0x0 => instrucao_sb(&mut regs, rs1, rs2, imm, memoria),
+                0x1 => instrucao_sh(&mut regs, rs1, rs2, imm, memoria),
+                0x2 => instrucao_sw(&mut regs, rs1, rs2, imm, memoria),
+                _ => println!("  Instrução STORE não implementada: funct3={}", funct3),
+            },
+            
+            // Instruções BRANCH
+            0x63 => match funct3 {
+                0x0 => instrucao_beq(&mut regs, rs1, rs2, imm),
+                0x1 => instrucao_bne(&mut regs, rs1, rs2, imm),
+                0x4 => instrucao_blt(&mut regs, rs1, rs2, imm),
+                0x5 => instrucao_bge(&mut regs, rs1, rs2, imm),
+                0x6 => instrucao_bltu(&mut regs, rs1, rs2, imm),
+                0x7 => instrucao_bgeu(&mut regs, rs1, rs2, imm),
+                _ => println!("  Instrução BRANCH não implementada: funct3={}", funct3),
+            },
+            
+            // LUI
+            0x37 => instrucao_lui(&mut regs, rd, imm),
+            
+            // AUIPC
+            0x17 => instrucao_auipc(&mut regs, rd, imm),
+            
+            // JAL
+            0x6F => instrucao_jal(&mut regs, rd, imm),
+            
+            // JALR
+            0x67 => instrucao_jalr(&mut regs, rd, rs1, imm),
+            
+            // FENCE
+            0x0F => match funct3 {
+                0x0 => instrucao_fence(&mut regs),
+                0x1 => instrucao_fence_i(&mut regs),
+                _ => println!("  Instrução FENCE não implementada: funct3={}", funct3),
+            },
+            
+            // ECALL/EBREAK
+            0x73 => match (funct3, imm) {
+                (0x0, 0x0) => instrucao_ecall(&mut regs),
+                (0x0, 0x1) => instrucao_ebreak(&mut regs),
+                _ => println!("  Instrução SYSTEM não implementada: funct3={}, imm={}", funct3, imm),
+            },
+            
+            _ => println!("  Opcode não reconhecido: 0x{:02X}", opcode),
+        }
+        
+        // Mostrar estado após cada 5 instruções
+        if (instrucoes_executadas + 1) % 5 == 0 {
+            println!("\n[STATE] Estado após {} instruções:", instrucoes_executadas + 1);
+            println!("  PC: 0x{:08X}, IR: 0x{:08X}", regs.pc, regs.ir);
+            println!("  MAR: 0x{:08X}, MDR: 0x{:08X}", regs.mar, regs.mdr);
+            println!("  Registradores principais:");
+            for i in 5..=15 {
+                if regs.ler(i) != 0 {
+                    println!("    x{}: 0x{:08X} ({})", i, regs.ler(i), regs.ler(i) as i32);
+                }
+            }
+        }
+        
+        instrucoes_executadas += 1;
+    }
+    
+    // RESULTADO FINAL
+    println!("\n═══════════════════════════════════════════════");
+    println!("EXECUÇÃO FINALIZADA");
+    println!("═══════════════════════════════════════════════");
+    println!("Total de instruções executadas: {}", instrucoes_executadas);
+    println!("Total de ciclos de clock: {}", regs.ciclos);
+    
+    println!("\n=== ESTADO FINAL DOS REGISTRADORES ===");
+    println!("PC: 0x{:08X}", regs.pc);
+    println!("IR: 0x{:08X}", regs.ir);
+    println!("MAR: 0x{:08X}, MDR: 0x{:08X}", regs.mar, regs.mdr);
+    
+    println!("\nRegistradores principais:");
+    for i in 0..32 {
+        let valor = regs.ler(i);
+        if valor != 0 {
+            let nome = match i {
+                0 => "zero",
+                1 => "ra",
+                2 => "sp",
+                3 => "gp",
+                4 => "tp",
+                5 => "t0",
+                6 => "t1",
+                7 => "t2",
+                8 => "s0/fp",
+                9 => "s1",
+                10 => "a0",
+                11 => "a1",
+                12 => "a2",
+                13 => "a3",
+                14 => "a4",
+                15 => "a5",
+                16 => "a6",
+                17 => "a7",
+                18 => "s2",
+                19 => "s3",
+                20 => "s4",
+                21 => "s5",
+                22 => "s6",
+                23 => "s7",
+                24 => "s8",
+                25 => "s9",
+                26 => "s10",
+                27 => "s11",
+                28 => "t3",
+                29 => "t4",
+                30 => "t5",
+                31 => "t6",
+                _ => "??",
+            };
+            println!("  x{:2} ({:6}): 0x{:08X} ({})", i, nome, valor, valor as i32);
+        }
+    }
+}
+
+//Memoria RAM separada em 4 partes
+struct MemoriaRAM {
+    ram_principal: [u8; 0x80000],
+    vram: [u8; 0x10000],
+    area_reservada: [u8; 0xFC00],
+    perifericos: [u8; 0x400],
+}
+
+impl MemoriaRAM {
+    fn new() -> Self {
+        MemoriaRAM {
+            ram_principal: [EMPTY; 0x80000],
+            vram: [EMPTY; 0x10000],
+            area_reservada: [EMPTY; 0xFC00],
+            perifericos: [EMPTY; 0x400],
+        }
+    }
+
+    //Função para escrever valores na RAM
+    fn escrever(&mut self, endereco: u32, valor: u32) {
+        let bytes = valor.to_be_bytes();
+        
+        match endereco {
+            0x00000..=0x7FFFF => { //tamanho da memoria principal 524.288 bytes (512KB)
+                let addr = endereco as usize;
+                for i in 0..4 {
+                    if addr + i < self.ram_principal.len() {
+                        self.ram_principal[addr + i] = bytes[i];
+                    }
+                }
+            },
+            0x80000..=0x8FFFF => { //tamanho da VRAM 65.536 bytes (64KB)
+                let addr = (endereco - 0x80000) as usize;
+                for i in 0..4 {
+                    if addr + i < self.vram.len() {
+                        self.vram[addr + i] = bytes[i];
+                    }
+                }
+            },
+            0x90000..=0x9FBFF => { //tamanho area expansao 64.512 bytes (~63KB)
+                let addr = (endereco - 0x90000) as usize;
+                for i in 0..4 {
+                    if addr + i < self.area_reservada.len() {
+                        self.area_reservada[addr + i] = bytes[i];
+                    }
+                }
+            },
+            0x9FC00..=0x9FFFF => { //tamanho entrada/saida mapeada 1.024 bytes (1KB)
+                let addr = (endereco - 0x9FC00) as usize;
+                for i in 0..4 {
+                    if addr + i < self.perifericos.len() {
+                        self.perifericos[addr + i] = bytes[i];
+                    }
+                }
+            },
+            _ => println!("Endereço inválido: 0x{:08X}", endereco),
+        }
+    }
+    
+    //Função para ler valores na RAM
+    fn ler(&self, endereco: u32) -> u32 {
+        let mut bytes = [0u8; 4];
+        
+        match endereco {
+            0x00000..=0x7FFFF => {
+                let addr = endereco as usize;
+                for i in 0..4 {
+                    if addr + i < self.ram_principal.len() {
+                        bytes[i] = self.ram_principal[addr + i];
+                    }
+                }
+            },
+            0x80000..=0x8FFFF => {
+                let addr = (endereco - 0x80000) as usize;
+                for i in 0..4 {
+                    if addr + i < self.vram.len() {
+                        bytes[i] = self.vram[addr + i];
+                    }
+                }
+            },
+            0x90000..=0x9FBFF => {
+                let addr = (endereco - 0x90000) as usize;
+                for i in 0..4 {
+                    if addr + i < self.area_reservada.len() {
+                        bytes[i] = self.area_reservada[addr + i];
+                    }
+                }
+            },
+            0x9FC00..=0x9FFFF => {
+                let addr = (endereco - 0x9FC00) as usize;
+                for i in 0..4 {
+                    if addr + i < self.perifericos.len() {
+                        bytes[i] = self.perifericos[addr + i];
+                    }
+                }
+            },
+            _ => {
+                println!("Endereço inválido: 0x{:08X}", endereco);
+                return 0;
+            },
+        }
+        
+        u32::from_be_bytes(bytes)
+    }
+    
+    //Função para escrever valores na VRAM
+    fn escrever_vram_byte(&mut self, endereco: u32, byte: u8) {
+        if endereco >= 0x80000 && endereco <= 0x8FFFF {
+            let addr = (endereco - 0x80000) as usize;
+            if addr < self.vram.len() {
+                self.vram[addr] = byte;
+            }
+        }
+    }
+    
+    //Função para printar os valores da VRAM
+    fn visualizar_vram(&self, endereco_inicial: u32, largura: usize, linhas: usize) {
+        let mut addr = (endereco_inicial - 0x80000) as usize;
+        
+        for linha in 0..linhas {
+            print!("VRAM[{:05X}]: ", endereco_inicial + (linha * largura) as u32);
+            
+            for coluna in 0..largura {
+                if addr < self.vram.len() {
+                    let byte = self.vram[addr];
+                    let caractere = if byte >= 32 && byte <= 126 {
+                        byte as char
+                    } else {
+                        ' '
+                    };
+                    print!("{}", caractere);
+                    addr += 1;
+                } else {
+                    print!(" ");
+                }
+            }
+            println!();
+        }
+    }
+}
+
+//Função main que chama a função de barramento, que chama a função de cpu e memoria RAM
+fn main() {
+    barramento();
+}
