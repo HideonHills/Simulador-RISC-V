@@ -6,8 +6,10 @@ Este projeto foi desenvolvido como componente de nota para a matéria Organizaç
 1) Será necessário um ambiente dedicado, como o visual code por exemplo.
 2) Dentro do visual code, baixar a extensão rust-analyzer, publicada por "rust-lang"
 3) Baixar a linguagem rust do website oficial: https://rust-lang.org/tools/install/
-4) Abrir a pasta do projeto "RISC_V"
-5) Abrir a pasta "src"
-6) Abrir o terminal dentro do arquivo main.rs
-7) Executar o comando "./main.exe" no terminal, dessa forma irá aparecer o resultado do programa de testes
-8) Se por algum motivo o arquivo main.exe não esteja criado, execute o comando "rustc main.rs" e o executavel irá aparecer dentro da pasta src
+4) Abrir uma pasta dentro do VScode onde ficará os arquivos do simulador
+5) Abrir um terminal dentro da pasta e inserir o comando "cargo new "algum nome"" para criar um ambiente com o arquivo main.rs e o cargo.toml
+6) Abrir o arquivo com o nome de main.rs, apagar seu conteúdo e substituir pelo codigo de simulador desse repositório
+7) Abrir um terminal dentro do arquivo main.rs e executar o comando "rustc main.rs", esse comando criará um executavel chamado "main.exe"
+8) Ainda no terminal do main.rs, executar o comando ./main.exe
+Ao executar o main.exe será gerado os resultados do programa de teste dentro do terminal do ambiente de programação.
+
