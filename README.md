@@ -11,5 +11,5 @@ Este projeto foi desenvolvido como componente de nota para a matéria Organizaç
 6) Abrir o arquivo com o nome de main.rs, apagar seu conteúdo e substituir pelo codigo de simulador desse repositório
 7) Abrir um terminal dentro do arquivo main.rs e executar o comando "rustc main.rs", esse comando criará um executavel chamado "main.exe"
 8) Ainda no terminal do main.rs, executar o comando ./main.exe
-Ao executar o main.exe será gerado os resultados do programa de teste dentro do terminal do ambiente de programação.
+9) Ao executar o main.exe será gerado os resultados do programa de teste dentro do terminal do ambiente de programação.
 
